@@ -1,0 +1,241 @@
+<div ng-controller="khoahoc_ctl">
+	<div class="container">
+		<div class="row">
+			<h2 class="sub-header">List of Intake</h2>
+			<div class="form-group">
+				<button class="btn btn-primary " data-toggle="modal" data-target="#myModalAdd"><span class="glyphicon glyphicon-plus"></span>Add</button>
+			</div>
+		</div>
+	</div>
+	<table id="data_table" class="display text-center" width="100%" cellspacing="0" datatables="ng">
+		<thead>
+			<tr>
+				<th class="text-center">No.</th>
+				<th class="text-center">Code</th>
+				<th class="text-center">Name</th>
+				<th class="text-center">Description</th>
+				<th class="text-center">Start Date</th>
+				<th class="text-center">End Date</th>
+				<th class="text-center">Status</th>
+				<th class="text-center"></th>
+			</tr>
+		</thead>
+
+		<tfoot>
+			<tr>
+				<th class="text-center">No.</th>
+				<th class="text-center">Code</th>
+				<th class="text-center">Name</th>
+				<th class="text-center">Description</th>
+				<th class="text-center">Start Date</th>
+				<th class="text-center">End Date</th>
+				<th class="text-center">Status</th>
+				<th class="text-center"></th>
+			</tr>
+		</tfoot>
+
+	</table>
+
+
+
+
+	<div class="container">
+		<!-- Modal Add content-->
+		<div class="modal fade container " id="myModalAdd" role="dialog">
+			<div class="modal-dialog ">
+				<div class="alert alert-success" ng-if="success==true">
+					<strong>Thành công!</strong> Bạn vừa thềm thành công khóa học có mã: {{int_code}}, tên {{int_name}}.
+				</div>
+				<!-- Modal content-->
+				<form name="Add">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Add Intake</h4>
+						</div>
+						<div class="modal-body row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Intake Code</label>
+									<div>
+										<input style="width:95%; float:left" name="int_code" type="text" class="form-control" id="coursename_Code" ng-model="khoahoc.int_code"
+											required><span style="color:red">&nbsp;&#42;</span>
+											<p class="label label-danger" ng-show="vali_intcode">Bạn chưa nhập mã khóa học!</p>
+											<p class="label label-danger" ng-show="vali_intcodeadd">Mã khóa học đã tồn tại!</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Start Date</label>
+									<div><input style="width:95%; float:left" type="text" class="form-control" id="datepicker_Addstart" ng-model="khoahoc.startdate"><span
+											style="color:red">&nbsp;&#42;</span>
+										<p class="label label-danger" ng-show="vali_startdate">Bạn chưa nhập ngày bắt đầu!</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Description</label>
+									<textarea style="width:95%" class="form-control" rows="3" id="description_Add" ng-model="khoahoc.int_description"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Intake Name</label>
+									<div><input style="width:95%; float:left" type="text" class="form-control" id="coursename_Add" ng-model="khoahoc.int_name"><span
+											style="color:red">&nbsp;&#42;</span>
+										<p class="label label-danger" ng-show="vali_intname">Bạn chưa nhập tên khóa học!</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label>End Date</label>
+									<div><input style="width:95%; float:left" type="text" class="form-control" id="datepicker_Addfinish" ng-model="khoahoc.enddate"><span
+											style="color:red">&nbsp;&#42;</span>
+										<p class="label label-danger" ng-show="vali_enddate">Bạn chưa nhập ngày kết thúc!</p>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" ng-click="check('insert')"><span class="glyphicon glyphicon-plus"></span>Add</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<div class="container">
+		<!-- Modal Edit content-->
+		<div class="modal fade container" id="myModalEdit" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<form name="edit">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Update Intake</h4>
+						</div>
+						<div class="modal-body row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Intake Code</label>
+									<div>
+										<input style="width:95%; float:left" name="int_code" type="text" class="form-control" id="coursename_Codee" ng-model="editkhoahoc.int_code"
+											required><span style="color:red">&nbsp;&#42;</span>
+											<p class="label label-danger" ng-show="edit.int_code.$error.required &&edit.int_code.$dirty">Bạn chưa nhập mã khóa học!</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Name</label>
+									<div><input style="width:95%; float:left" name="int_name" type="text" class="form-control" id="coursename_Edit" ng-model="editkhoahoc.int_name" required><span
+											style="color:red">&nbsp;&#42;</span>
+											<p class="label label-danger" ng-show="edit.int_name.$error.required &&edit.int_name.$dirty">Bạn chưa nhập tên khóa học!</p>
+											</div>
+								</div>
+								<div class="form-group">
+									<label>Start Date</label>
+									<div><input style="width:95%; float:left" name="startdate" type="text" class="form-control" id="datepicker_Editstart" ng-model="editkhoahoc.startdate" required><span
+											style="color:red">&nbsp;&#42;</span>
+											<p class="label label-danger" ng-show="edit.startdate.$error.required &&edit.startdate.$dirty">Bạn chưa nhập ngày bắt đầu!</p>
+											</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>End Date</label>
+									<div><input style="width:95%; float:left" name="enddate" type="text" class="form-control" id="datepicker_Editfinish" ng-model="editkhoahoc.enddate" required><span
+											style="color:red">&nbsp;&#42;</span>
+											<p class="label label-danger" ng-show="edit.enddate.$error.required &&edit.enddate.$dirty">Bạn chưa nhập ngày kết thúc!</p>
+											</div>
+								</div>
+								<div class="form-group">
+									<label>Description</label>
+									<textarea style="width:95%" class="form-control" rows="3" id="description_Edit" ng-model="editkhoahoc.int_description"></textarea>
+								</div>
+								<div class="form-group">
+									<label style="display:block">Select status</label>
+									<form>
+										<label class="radio-inline">
+															<input type="radio"  name ="status_Edit" value="1" ng-model="editkhoahoc.status" ng-checked="editkhoahoc.status==1">
+															Active
+											</label>
+										<label class="radio-inline">
+															<input type="radio"  name ="status_Edit" value="0" ng-model="editkhoahoc.status" ng-checked="editkhoahoc.status==0">
+															Inactive
+
+											</label>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-warning" id="update_kh" data-dismiss="modal" ng-disabled="edit.$invalid" ng-click="check('update')"><span class="glyphicon glyphicon-edit"></span>Update</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="modal fade" id="myModalConfirm" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">ARE YOU SURE</h4>
+
+					</div>
+
+					<div class="modal-body">
+						<p>Do you want to remove data?</p>
+					</div>
+
+					<div class="modal-footer">
+
+						<button style="color: blue" onMouseOver="this.style.background='#CB3D39'" onMouseOut="this.style.background='#F0F0F0'" type="button"
+							class="btn" data-dismiss="modal" ng-click='remove()'>Yes</button>
+							<button style="color: blue" onMouseOver="this.style.background='#CB3D39'" onMouseOut="this.style.background='#F0F0F0'" type="button"
+								class="btn" data-dismiss="modal">No</button>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal" id="myModalSuccess">
+		<div class="modal-dialog modal-sm">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header alert alert-success">
+					<h4 class="modal-title">Success</h4>
+
+				</div>
+				<div class="modal-body">
+					<p>{{method}} thành công!</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+												$(function () {
+													$("#datepicker_Addstart").datepicker();
+													$("#datepicker_Addfinish").datepicker();
+													$("#datepicker_Editstart").datepicker();
+													$("#datepicker_Editfinish").datepicker();
+												});
+	</script>
+</div>
